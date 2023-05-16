@@ -4,7 +4,15 @@
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-TL;DR - A one size fits all walkthrough, to fine-tune Whisper (large) **5x faster** on a consumer GPU with **less than 8GB GPU VRAM**, all with comparable performance to full-finetuning. ⚡️
+**TL;DR** - A one size fits all walkthrough, to fine-tune Whisper (large) **5x faster** on a consumer GPU with **less than 8GB GPU VRAM**, all with comparable performance to full-finetuning. ⚡️
+
+Not convinced? Here are some benchmarks we ran on a free Google Colab T4 GPU! 👇
+
+| Training type    | Trainable params | Memory allocation | Max. batch size |
+|------------------|------------------|-------------------|-----------------|
+| LoRA             | >1%              | 8GB               | 24              |
+| adaLoRA          | >0.9%            | 7.9GB             | 24              |
+| Full-fine-tuning | 100%             | OOM on T4         | OOM on T4       |
 
 ## Table of Contents
 
