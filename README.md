@@ -560,6 +560,44 @@ print(f"{wer=} and {normalized_wer=}")
 print(eval_metrics)
 ```
 
+### Inference with Pipeline
+
+Wrapping this all up and let's use the `pipeline` API in 🤗 transformers to run inference on our newly-fine-tuned model! To do so, load the LoRA weights from the hub and download the base processor, tokenizer and then pass it all in the pipeline object! That's it. Happy inferencing!
+
+```python
+from transformers import (
+    AutomaticSpeechRecognitionPipeline,
+    WhisperForConditionalGeneration,
+    WhisperTokenizer,
+    WhisperProcessor,
+)
+from peft import PeftModel, PeftConfig
+
+
+peft_model_id = "reach-vb/whisper-large-v2-hindi-100steps" # Use the same model ID as before.
+language = "hi"
+task = "transcribe"
+peft_config = PeftConfig.from_pretrained(peft_model_id)
+model = WhisperForConditionalGeneration.from_pretrained(
+    peft_config.base_model_name_or_path, load_in_8bit=True, device_map="auto"
+)
+
+model = PeftModel.from_pretrained(model, peft_model_id)
+tokenizer = WhisperTokenizer.from_pretrained(peft_config.base_model_name_or_path, language=language, task=task)
+processor = WhisperProcessor.from_pretrained(peft_config.base_model_name_or_path, language=language, task=task)
+feature_extractor = processor.feature_extractor
+forced_decoder_ids = processor.get_decoder_prompt_ids(language=language, task=task)
+pipe = AutomaticSpeechRecognitionPipeline(model=model, tokenizer=tokenizer, feature_extractor=feature_extractor)
+
+
+def transcribe(audio):
+    with torch.cuda.amp.autocast():
+        text = pipe(audio, generate_kwargs={"forced_decoder_ids": forced_decoder_ids}, max_new_tokens=255)["text"]
+    return text
+
+transcribe("test_file.mp3")
+```
+
 ## Fin!
 
 If you made it all the way till the end then pat yourself on the back. Looking back, we learned how to train *any* Whisper checkpoint faster, cheaper and with negligible loss in WER.
