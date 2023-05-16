@@ -1,14 +1,4 @@
----
-title: "Finetune Whisper with LoRA & BNB powered by 🤗 PEFT" 
-thumbnail: /blog/assets/101_decision-transformers-train/thumbnail.gif
-authors:
-- user: reach-vb
----
-
-# Fine tune Whisper with LoRA powered by PEFT
-
-<!-- {blog_metadata} -->
-<!-- {authors} -->
+# Faster Whisper Finetuning with LoRA powered by PEFT
 
 <a target="_blank" href="https://colab.research.google.com/github/Vaibhavs10/notebooks/blob/main/Whisper_w_PEFT.ipynb">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
