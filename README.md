@@ -16,14 +16,14 @@ Not convinced? Here are some benchmarks we ran on a free Google Colab T4 GPU! ðŸ
 
 ## Table of Contents
 
-1. [Why Parameter Efficient Fine Tuning (PEFT)?](#why-parameter-efficient-fine-tuning-(peft)?)
+1. [Why Parameter Efficient Fine Tuning (PEFT)?](#why-parameter-efficient-fine-tuning-peft)
 2. [Fine-tuning Whisper in a Google Colab](#fine-tuning-whisper-in-a-google-colab)
     1. [Prepare Environment](#prepare-environment)
     2. [Load Dataset](#load-dataset)
     3. [Prepare Feature Extractor, Tokenizer and Data](#prepare-feature-extractor-tokenizer-and-data)
     4. [Training and Evaluation](#training-and-evaluation)
 3. [Evaluation and Inference](#evaluation-and-inference)
-4. [Fin!](#fin!)
+4. [Fin!](#fin)
 
 We present a step-by-step guide on how to fine-tune Whisper with Common Voice 13.0 dataset using ðŸ¤— Transformers and PEFT. In this Colab, we leverage `PEFT` and `bitsandbytes` to train a `whisper-large-v2` checkpoint seamlessly with a free T4 GPU (16 GB VRAM).
 
