@@ -10,8 +10,8 @@ Not convinced? Here are some benchmarks we ran on a free Google Colab T4 GPU! ðŸ
 
 | Training type    | Trainable params | Memory allocation | Max. batch size |
 |------------------|------------------|-------------------|-----------------|
-| LoRA             | >1%              | 8GB               | 24              |
-| adaLoRA          | >0.9%            | 7.9GB             | 24              |
+| LoRA             | <1%              | 8GB               | 24              |
+| adaLoRA          | <0.9%            | 7.9GB             | 24              |
 | Full-fine-tuning | 100%             | OOM on T4         | OOM on T4       |
 
 ## Table of Contents
@@ -99,8 +99,10 @@ from datasets import load_dataset, DatasetDict
 
 common_voice = DatasetDict()
 
+language_abbr = "hi" # Replace with the language ID of your choice here!
+
 common_voice["train"] = load_dataset(dataset_name, language_abbr, split="train+validation", use_auth_token=True)
-common_voice["test"] = load_dataset(dataset_name, language_abbr, split="test")
+common_voice["test"] = load_dataset(dataset_name, language_abbr, split="test", use_auth_token=True)
 
 print(common_voice)
 ```
@@ -169,7 +171,9 @@ feature_extractor = WhisperFeatureExtractor.from_pretrained(model_name_or_path)
 ```python
 from transformers import WhisperTokenizer
 
-tokenizer = WhisperTokenizer.from_pretrained(model_name_or_path, language=language, task=task)
+task = "transcribe"
+
+tokenizer = WhisperTokenizer.from_pretrained(model_name_or_path, language=language_abbr, task=task)
 ```
 
 To simplify using the feature extractor and tokenizer, we can _wrap_ both into a single `WhisperProcessor` class. This processor object can be used on the audio inputs and model predictions as required. 
@@ -355,7 +359,7 @@ metric = evaluate.load("wer")
 Now let's load the pre-trained Whisper checkpoint. Again, this 
 is trivial through use of ðŸ¤— Transformers!
 
-To reduce our models memory footprint, we load the model in 8bit, this means we quantize the model to use 1/4th precision (when comapared to float32) with minimal loss to performance. To read more about how this works, head over [here](https://huggingface.co/blog/hf-bitsandbytes-integration).
+To reduce our models memory footprint, we load the model in 8bit, this means we quantize the model to use 1/4th precision (when compared to float32) with minimal loss to performance. To read more about how this works, head over [here](https://huggingface.co/blog/hf-bitsandbytes-integration).
 
 ```python
 from transformers import WhisperForConditionalGeneration
@@ -412,13 +416,13 @@ training_args = Seq2SeqTrainingArguments(
     gradient_accumulation_steps=1,  # increase by 2x for every 2x decrease in batch size
     learning_rate=1e-3,
     warmup_steps=50,
-    num_train_epochs=1,
+    num_train_epochs=3,
     evaluation_strategy="steps",
     fp16=True,
     per_device_eval_batch_size=8,
     generation_max_length=128,
     logging_steps=100,
-    max_steps=100, # only for testing purposes, remove this from your final run :)
+#    max_steps=100, # only for testing purposes, remove this from your final run :)
     remove_unused_columns=False,  # required as the PeftModel forward doesn't have the signature of the wrapped model's forward
     label_names=["labels"],  # same reason as above
 )
