@@ -1,10 +1,10 @@
-# Faster Whisper Finetuning with LoRA powered by PEFT
+# Faster Whisper Finetuning with LoRA powered by 🤗 PEFT
 
-<a target="_blank" href="https://colab.research.google.com/github/Vaibhavs10/notebooks/blob/main/Whisper_w_PEFT.ipynb">
+<a target="_blank" href="https://github.com/Vaibhavs10/fast-whisper-finetuning/blob/main/Whisper_w_PEFT.ipynb">
     <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-A one size fits all walkthrough, to fine-tune Whisper (large) **5x faster** on a consumer GPU with **less than 8GB GPU VRAM**, all with comparable performance to full-finetuning. ⚡️
+TL;DR - A one size fits all walkthrough, to fine-tune Whisper (large) **5x faster** on a consumer GPU with **less than 8GB GPU VRAM**, all with comparable performance to full-finetuning. ⚡️
 
 ## Table of Contents
 
@@ -554,5 +554,7 @@ print(eval_metrics)
 If you made it all the way till the end then pat yourself on the back. Looking back, we learned how to train *any* Whisper checkpoint faster, cheaper and with negligible loss in WER.
 
 With PEFT, you can also go beyond Speech recognition and apply the same set of techniques to other pretrained models as well. Come check it out here: https://github.com/huggingface/peft 🤗
+
+Hungry to push this to the limits and test out more SoTA techniques? [Try Whisper with adalora!](https://github.com/huggingface/peft/blob/main/examples/int8_training/run_adalora_whisper_int8.sh)
 
 Don't forget to tweet your results and tag us! [@huggingface](https://twitter.com/huggingface) and [@reach_vb](https://twitter.com/reach_vb) ❤️
