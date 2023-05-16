@@ -92,7 +92,7 @@ from datasets import load_dataset, DatasetDict
 common_voice = DatasetDict()
 
 common_voice["train"] = load_dataset(dataset_name, language_abbr, split="train+validation", use_auth_token=True)
-common_voice["test"] = load_dataset(dataset_name, language_abbr, split="test", use_auth_token=True)
+common_voice["test"] = load_dataset(dataset_name, language_abbr, split="test")
 
 print(common_voice)
 ```
@@ -256,8 +256,6 @@ Dataset({
 ```
 
 ### Training and Evaluation
-
-## Training and Evaluation
 
 Now that we've prepared our data, we're ready to dive into the training pipeline. 
 The [🤗 Trainer](https://huggingface.co/transformers/master/main_classes/trainer.html?highlight=trainer)
