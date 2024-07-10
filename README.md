@@ -363,9 +363,10 @@ is trivial through use of 🤗 Transformers!
 To reduce our models memory footprint, we load the model in 8bit, this means we quantize the model to use 1/4th precision (when compared to float32) with minimal loss to performance. To read more about how this works, head over [here](https://huggingface.co/blog/hf-bitsandbytes-integration).
 
 ```python
-from transformers import WhisperForConditionalGeneration
+from transformers import WhisperForConditionalGeneration, BitsAndBytesConfig
 
-model = WhisperForConditionalGeneration.from_pretrained(model_name_or_path, load_in_8bit=True, device_map="auto")
+quantization_config=BitsAndBytesConfig(load_in_8bit=True)
+model = WhisperForConditionalGeneration.from_pretrained(model_name_or_path, quantization_config=quantization_config, device_map="auto")
 ```
 ### Post-processing on the model
 
